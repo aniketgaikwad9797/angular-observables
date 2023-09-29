@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Observable } from 'rxjs-compat';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -27,18 +28,26 @@ export class HomeComponent implements OnInit, OnDestroy {
       }, 1000);
     });
 
-    this.customIntSubscription = customIntObservable.subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-        alert(error.message);
-      },
-      ()=>{
-        console.log('Some cleanup logic that can be written, let\'s say on a completion of http request')
-      }
-    );
+    this.customIntSubscription = customIntObservable
+      .pipe(
+        map((data: number) => {
+          return 'Negative Count: ' + data;
+        })
+      )
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+          alert(error.message);
+        },
+        () => {
+          console.log(
+            "Some cleanup logic that can be written, let's say on a completion of http request"
+          );
+        }
+      );
   }
 
   ngOnDestroy(): void {
