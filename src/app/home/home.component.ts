@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Observable } from 'rxjs-compat';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +30,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.customIntSubscription = customIntObservable
       .pipe(
+        filter((data: number) => {
+          return (data % 2 == 0);
+        }),
         map((data: number) => {
           return 'Negative Count: ' + data;
         })
