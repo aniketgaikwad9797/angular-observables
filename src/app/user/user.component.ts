@@ -22,6 +22,6 @@ export class UserComponent implements OnInit {
   }
 
   onAppActivate() {
-    this.appActivateService.onAppActivate.emit(true);
+    this.appActivateService.onAppActivate.next(true);
   }
 }
